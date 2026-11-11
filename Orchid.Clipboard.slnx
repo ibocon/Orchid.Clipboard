@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/Orchid.Service.Clipboard.csproj" />
+  <Project Path="Client/src/Orchid.Clipboard.Client.csproj" />
+  <Project Path="test/UnitTests/Orchid.Clipboard.UnitTests.csproj" />
+  <Project Path="test/ArchitectureTests/Orchid.Service.Clipboard.ArchTests.csproj" />
+</Solution>

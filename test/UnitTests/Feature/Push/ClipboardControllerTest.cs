@@ -9,12 +9,12 @@ using Orchid.Service.Clipboard.Api.Controller;
 using Orchid.Service.Clipboard.Application.Command;
 using Xunit;
 
-namespace Orchid.UnitTests.Service;
+namespace Orchid.UnitTest.Service;
 
 /// <summary>
 /// <see cref="ClipboardController"/>의 HTTP 응답 매핑(200 Ok 및 400 BadRequest) 동작을 검증하는 단위 테스트입니다.
 /// </summary>
-public sealed class ClipboardControllerTests
+public sealed class ClipboardControllerTest
 {
     [Fact]
     public async Task Push_When_Sender_Succeeds_Should_Return_Ok()

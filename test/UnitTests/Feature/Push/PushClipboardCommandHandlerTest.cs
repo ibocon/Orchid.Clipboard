@@ -6,9 +6,9 @@ using Orchid.Service.Clipboard.Application.Common;
 using Orchid.Service.Clipboard.Application.Handler;
 using Xunit;
 
-namespace Orchid.UnitTests.Service;
+namespace Orchid.UnitTest.Service;
 
-public sealed class PushClipboardCommandHandlerTests
+public sealed class PushClipboardCommandHandlerTest
 {
     [Fact]
     public async Task Handle_Should_Broadcast_EncryptedPayload_To_Connected_Clients()

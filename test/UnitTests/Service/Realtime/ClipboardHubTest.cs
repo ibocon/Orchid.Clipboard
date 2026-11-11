@@ -5,12 +5,12 @@ using Orchid.Contract.Payload;
 using Orchid.Service.Clipboard.Infrastructure.Realtime;
 using Xunit;
 
-namespace Orchid.UnitTests.Service;
+namespace Orchid.UnitTest.Service;
 
 /// <summary>
 /// <see cref="ClipboardHub"/>의 페어링 그룹 격리 중계를 검증하는 단위 테스트입니다.
 /// </summary>
-public sealed class ClipboardHubTests
+public sealed class ClipboardHubTest
 {
     private static readonly EncryptedPayload Payload = new(Guid.NewGuid(), [1], [2], [3], "AES-256-GCM", DateTimeOffset.UtcNow);
 

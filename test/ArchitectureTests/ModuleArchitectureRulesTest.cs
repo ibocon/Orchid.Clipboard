@@ -116,4 +116,34 @@ public sealed class ModuleArchitectureRulesTest
         // Then
         result.IsSuccessful.Should().BeTrue("도메인 및 애플리케이션 계층은 외부 DB SDK에 직접 의존해서는 안 됩니다.");
     }
+
+    /// <summary>
+    /// 독립 저장소 Dockerfile 및 워크플로우 경로가 모노레포 경로를 참조하지 않는지 검증합니다.
+    /// </summary>
+    [Fact]
+    public void DockerfileAndWorkflowShouldUseStandaloneRepositoryPaths()
+    {
+        // Given
+        string repoRoot = FindRepositoryRoot();
+        string dockerfile = File.ReadAllText(Path.Combine(repoRoot, "src/Dockerfile"));
+        string workflow = File.ReadAllText(Path.Combine(repoRoot, ".github/workflows/publish-clipboard-image.yml"));
+
+        // When & Then
+        dockerfile.Should().Contain("Directory.Packages.props");
+        dockerfile.Should().Contain("NuGet.config");
+        dockerfile.Should().Contain("src/Orchid.Service.Clipboard.csproj");
+        dockerfile.Should().NotContain("src/Shared/Contract/");
+        workflow.Should().Contain("dockerfile: src/Dockerfile");
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        DirectoryInfo? dir = new(AppContext.BaseDirectory);
+        while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "Orchid.Clipboard.slnx")))
+        {
+            dir = dir.Parent;
+        }
+
+        return dir?.FullName ?? throw new InvalidOperationException("Orchid.Clipboard.slnx not found.");
+    }
 }

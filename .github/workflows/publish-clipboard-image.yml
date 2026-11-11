@@ -25,7 +25,7 @@ jobs:
     uses: ./.github/workflows/publish-service-image.yml
     with:
       service: clipboard
-      dockerfile: src/Service/Clipboard/Dockerfile
+      dockerfile: src/Dockerfile
       ref: ${{ github.event.inputs.ref }}
       promote-staging: ${{ github.event.inputs.promote-staging != 'false' }}
     secrets: inherit

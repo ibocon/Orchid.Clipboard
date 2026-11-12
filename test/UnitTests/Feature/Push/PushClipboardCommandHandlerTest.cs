@@ -11,13 +11,13 @@ namespace Orchid.UnitTest.Service;
 public sealed class PushClipboardCommandHandlerTest
 {
     [Fact]
-    public async Task Handle_Should_Broadcast_EncryptedPayload_To_Connected_Clients()
+    public async Task HandleShouldBroadcastEncryptedPayloadToConnectedClients()
     {
         // Given
-        var broadcastMock = new Mock<IRealtimeBroadcastService>();
-        var handler = new PushClipboardCommandHandler(broadcastMock.Object);
-        var payload = new EncryptedPayload(Guid.NewGuid(), [1, 2], [3], [4], "AES-256-GCM", DateTimeOffset.UtcNow);
-        var command = new PushClipboardCommand(Guid.NewGuid(), payload);
+        Mock<IRealtimeBroadcastService> broadcastMock = new Mock<IRealtimeBroadcastService>();
+        PushClipboardCommandHandler handler = new PushClipboardCommandHandler(broadcastMock.Object);
+        EncryptedPayload payload = new EncryptedPayload(Guid.NewGuid(), [1, 2], [3], [4], "AES-256-GCM", DateTimeOffset.UtcNow);
+        PushClipboardCommand command = new PushClipboardCommand(Guid.NewGuid(), payload);
 
         // When
         var result = await handler.Handle(command, CancellationToken.None);

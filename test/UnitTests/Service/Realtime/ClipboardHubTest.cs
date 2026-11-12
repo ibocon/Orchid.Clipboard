@@ -15,10 +15,10 @@ public sealed class ClipboardHubTest
     private static readonly EncryptedPayload Payload = new(Guid.NewGuid(), [1], [2], [3], "AES-256-GCM", DateTimeOffset.UtcNow);
 
     [Fact]
-    public async Task JoinPairing_When_PairingId_Given_Should_Add_Connection_To_Group()
+    public async Task JoinPairingWhenPairingIdGivenShouldAddConnectionToGroup()
     {
         // Given
-        var groups = new Mock<IGroupManager>();
+        Mock<IGroupManager> groups = new Mock<IGroupManager>();
         ClipboardHub sut = CreateHub(groups.Object, new Mock<IHubCallerClients>().Object);
 
         // When
@@ -29,11 +29,11 @@ public sealed class ClipboardHubTest
     }
 
     [Fact]
-    public async Task SendClipboard_When_Payload_Given_Should_Relay_Only_To_Others_In_Group()
+    public async Task SendClipboardWhenPayloadGivenShouldRelayOnlyToOthersInGroup()
     {
         // Given
-        var groupProxy = new Mock<IClientProxy>();
-        var clients = new Mock<IHubCallerClients>();
+        Mock<IClientProxy> groupProxy = new Mock<IClientProxy>();
+        Mock<IHubCallerClients> clients = new Mock<IHubCallerClients>();
         clients.Setup(c => c.OthersInGroup("ABCDEF")).Returns(groupProxy.Object);
         ClipboardHub sut = CreateHub(new Mock<IGroupManager>().Object, clients.Object);
 
@@ -49,7 +49,7 @@ public sealed class ClipboardHubTest
     }
 
     [Fact]
-    public async Task SendClipboard_When_PairingId_Blank_Should_Throw()
+    public async Task SendClipboardWhenPairingIdBlankShouldThrow()
     {
         // Given
         ClipboardHub sut = CreateHub(new Mock<IGroupManager>().Object, new Mock<IHubCallerClients>().Object);
@@ -63,7 +63,7 @@ public sealed class ClipboardHubTest
 
     private static ClipboardHub CreateHub(IGroupManager groups, IHubCallerClients clients)
     {
-        var context = new Mock<HubCallerContext>();
+        Mock<HubCallerContext> context = new Mock<HubCallerContext>();
         context.SetupGet(c => c.ConnectionId).Returns("conn-1");
         return new ClipboardHub
         {

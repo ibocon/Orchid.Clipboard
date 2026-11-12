@@ -17,16 +17,16 @@ namespace Orchid.UnitTest.Service;
 public sealed class ClipboardControllerTest
 {
     [Fact]
-    public async Task Push_When_Sender_Succeeds_Should_Return_Ok()
+    public async Task PushWhenSenderSucceedsShouldReturnOk()
     {
         // Given
-        var senderMock = new Mock<ISender>();
+        Mock<ISender> senderMock = new Mock<ISender>();
         senderMock.Setup(s => s.Send(It.IsAny<PushClipboardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
-        var controller = new ClipboardController(senderMock.Object);
-        var payload = new EncryptedPayload(Guid.NewGuid(), [1], [2], [3], "AES", DateTimeOffset.UtcNow);
-        var request = new PushClipboardRequest(Guid.NewGuid(), DevicePlatform.Windows, ContentType.Text, payload);
+        ClipboardController controller = new ClipboardController(senderMock.Object);
+        EncryptedPayload payload = new EncryptedPayload(Guid.NewGuid(), [1], [2], [3], "AES", DateTimeOffset.UtcNow);
+        PushClipboardRequest request = new PushClipboardRequest(Guid.NewGuid(), DevicePlatform.Windows, ContentType.Text, payload);
 
         // When
         var response = await controller.Push(request, CancellationToken.None);
@@ -36,16 +36,16 @@ public sealed class ClipboardControllerTest
     }
 
     [Fact]
-    public async Task Push_When_Sender_Fails_Should_Return_BadRequest()
+    public async Task PushWhenSenderFailsShouldReturnBadRequest()
     {
         // Given
-        var senderMock = new Mock<ISender>();
+        Mock<ISender> senderMock = new Mock<ISender>();
         senderMock.Setup(s => s.Send(It.IsAny<PushClipboardCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
-        var controller = new ClipboardController(senderMock.Object);
-        var payload = new EncryptedPayload(Guid.NewGuid(), [1], [2], [3], "AES", DateTimeOffset.UtcNow);
-        var request = new PushClipboardRequest(Guid.NewGuid(), DevicePlatform.Windows, ContentType.Text, payload);
+        ClipboardController controller = new ClipboardController(senderMock.Object);
+        EncryptedPayload payload = new EncryptedPayload(Guid.NewGuid(), [1], [2], [3], "AES", DateTimeOffset.UtcNow);
+        PushClipboardRequest request = new PushClipboardRequest(Guid.NewGuid(), DevicePlatform.Windows, ContentType.Text, payload);
 
         // When
         var response = await controller.Push(request, CancellationToken.None);

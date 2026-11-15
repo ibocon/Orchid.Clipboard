@@ -18,7 +18,7 @@ public sealed class ClipboardHubTest
     public async Task JoinPairingWhenPairingIdGivenShouldAddConnectionToGroup()
     {
         // Given
-        Mock<IGroupManager> groups = new Mock<IGroupManager>();
+        Mock<IGroupManager> groups = new();
         ClipboardHub sut = CreateHub(groups.Object, new Mock<IHubCallerClients>().Object);
 
         // When
@@ -32,8 +32,8 @@ public sealed class ClipboardHubTest
     public async Task SendClipboardWhenPayloadGivenShouldRelayOnlyToOthersInGroup()
     {
         // Given
-        Mock<IClientProxy> groupProxy = new Mock<IClientProxy>();
-        Mock<IHubCallerClients> clients = new Mock<IHubCallerClients>();
+        Mock<IClientProxy> groupProxy = new();
+        Mock<IHubCallerClients> clients = new();
         clients.Setup(c => c.OthersInGroup("ABCDEF")).Returns(groupProxy.Object);
         ClipboardHub sut = CreateHub(new Mock<IGroupManager>().Object, clients.Object);
 
@@ -63,7 +63,7 @@ public sealed class ClipboardHubTest
 
     private static ClipboardHub CreateHub(IGroupManager groups, IHubCallerClients clients)
     {
-        Mock<HubCallerContext> context = new Mock<HubCallerContext>();
+        Mock<HubCallerContext> context = new();
         context.SetupGet(c => c.ConnectionId).Returns("conn-1");
         return new ClipboardHub
         {

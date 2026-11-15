@@ -14,13 +14,13 @@ public sealed class PushClipboardCommandHandlerTest
     public async Task HandleShouldBroadcastEncryptedPayloadToConnectedClients()
     {
         // Given
-        Mock<IRealtimeBroadcastService> broadcastMock = new Mock<IRealtimeBroadcastService>();
-        PushClipboardCommandHandler handler = new PushClipboardCommandHandler(broadcastMock.Object);
-        EncryptedPayload payload = new EncryptedPayload(Guid.NewGuid(), [1, 2], [3], [4], "AES-256-GCM", DateTimeOffset.UtcNow);
-        PushClipboardCommand command = new PushClipboardCommand(Guid.NewGuid(), payload);
+        Mock<IRealtimeBroadcastService> broadcastMock = new();
+        PushClipboardCommandHandler handler = new(broadcastMock.Object);
+        EncryptedPayload payload = new(Guid.NewGuid(), [1, 2], [3], [4], "AES-256-GCM", DateTimeOffset.UtcNow);
+        PushClipboardCommand command = new(Guid.NewGuid(), payload);
 
         // When
-        var result = await handler.Handle(command, CancellationToken.None);
+        bool result = await handler.Handle(command, CancellationToken.None);
 
         // Then
         result.Should().BeTrue();
